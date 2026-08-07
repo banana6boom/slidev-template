@@ -1,0 +1,42 @@
+# Slidev резолвит тему и аддоны собственным резолвером, которому нужен доступ
+# к пакетам верхнего уровня. В pnpm 11 эта настройка живёт здесь, а не в .npmrc:
+# там её понимал только pnpm, и npm ругался «Unknown project config».
+shamefullyHoist: true
+
+# Скрипты из package.json выполняются через встроенную эмуляцию shell —
+# одинаковое поведение на Windows и Unix, а участники у нас на разных ОС.
+shellEmulator: true
+
+# Защита цепочки поставок: не ставить пакет, у которого гарантии публикации
+# слабее, чем у более ранних версий (возможный захват пакета).
+trustPolicy: no-downgrade
+
+# Два исключения — глубокие транзитивные зависимости самого Slidev, на версии
+# которых мы не влияем:
+#   undici-types ← @types/node ← pptxgenjs ← @slidev/cli
+#   semver       ← @babel/core
+# У обоих ранние версии публиковались с provenance, а эти — без него.
+# Точечный список вместо отключения политики: остальные ~1090 записей
+# продолжают проверяться. Пересматривать при обновлении @slidev/cli.
+trustPolicyExclude:
+  - undici-types@6.21.0
+  - semver@6.3.1
+
+packages:
+  # Демо-приложения к лекциям (vanilla js и прочее)
+  - 'apps/*'
+
+# pnpm 11 по умолчанию блокирует postinstall-скрипты зависимостей.
+allowBuilds:
+  # Осознанно false: postinstall качает Chromium (~650 МБ) каждому, а нужен
+  # он только для `pnpm export`. Браузер ставится один раз вручную:
+  # npx playwright install chromium
+  # (в devcontainer — флаг INSTALL_PLAYWRIGHT_BROWSER в .devcontainer/.env)
+  playwright-chromium: false
+  # Ставит git-хук через postinstall — иначе проверки перед коммитом
+  # не подключатся автоматически после клона
+  simple-git-hooks: true
+
+# Slidev ищет workspace root вверх по дереву (searchForWorkspaceRoot).
+# Наличие этого файла фиксирует корень репозитория как userWorkspaceRoot,
+# благодаря чему деки во вложенных папках видят общий node_modules.

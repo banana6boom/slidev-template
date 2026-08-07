@@ -1,0 +1,31 @@
+{
+  // Расширение Slidev по умолчанию сканирует все md-файлы репозитория.
+  // Ограничиваем лекциями, иначе в дерево слайдов попадут README и AGENTS.md.
+  //
+  // Внимание: этот glob не знает про соглашение «папки на _ — служебные»,
+  // которое соблюдают скрипты (scripts/shared.mjs). Служебную папку внутри
+  // presentations/ расширение покажет как обычную лекцию.
+  "slidev.include": [
+    "**/presentations/*/slides.md"
+  ],
+
+  // Запуск dev-сервера кнопкой из расширения — тем же менеджером, что и в CLI
+  "slidev.dev-command": "pnpm exec slidev ${args}",
+
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    // В markdown два пробела в конце строки — значащий перенос
+    "files.trimTrailingWhitespace": false
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    // Skill Slidev — 53 справочных файла, зашумляют поиск по проекту
+    ".claude/skills/slidev/references": true
+  }
+}

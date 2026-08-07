@@ -1,0 +1,30 @@
+{
+  // Нужен только для проверки типов в общих блоках (vue-tsc --noEmit).
+  // Сборкой занимается Slidev через свой Vite — этот конфиг ничего не компилирует.
+  "compilerOptions": {
+    "target": "ESNext",
+
+    // Vue SFC: без этого шаблоны не типизируются
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "strict": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "shared/**/*.ts",
+    "shared/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

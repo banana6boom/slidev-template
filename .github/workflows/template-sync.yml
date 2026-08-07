@@ -1,0 +1,58 @@
+# Обновление инфраструктуры из репозитория-шаблона.
+#
+# Запускается вручную: Actions → «Обновление из шаблона» → Run workflow.
+# Расписания нет намеренно — синхронизацию стоит запускать тогда, когда есть
+# время разобрать получившийся PR и прогнать локально `pnpm check`.
+#
+# Что НЕ обновляется, перечислено в .templatesyncignore (лекции, README,
+# shared/course.json, словарь курса, lock-файл).
+#
+# ВАЖНО, прочитайте перед первым запуском:
+#
+# 1. У шаблона и этого репозитория нет общей истории (репозиторий создан
+#    кнопкой «Use this template», а не форком). Поэтому первый PR будет
+#    большим и конфликтным — это свойство механизма, а не поломка.
+#    Последующие обновления выглядят как обычные диффы.
+#
+# 2. Стратегия слияния по умолчанию — «-X theirs»: при конфликте побеждает
+#    версия шаблона. Если файл курса не попал в .templatesyncignore, он будет
+#    перезаписан молча. Проверьте список перед первым запуском.
+#
+# 3. Нужен секрет TEMPLATE_SYNC_TOKEN — personal access token со scope
+#    «workflow» (и «repo» для приватных репозиториев). Без него синхронизация
+#    упадёт на файлах .github/workflows/: встроенному GITHUB_TOKEN
+#    не разрешено их менять.
+#
+# 4. После вливания PR выполните `pnpm install` — lock-файл не синхронизируется.
+
+name: Обновление из шаблона
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Показать изменения, не создавая PR
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Иначе учётные данные checkout конфликтуют с токеном синхронизации
+          persist-credentials: false
+
+      - uses: AndreasAugustin/actions-template-sync@v2
+        with:
+          github_token: ${{ secrets.TEMPLATE_SYNC_TOKEN || secrets.GITHUB_TOKEN }}
+          source_repo_path: banana6boom/slidev-template
+          upstream_branch: main
+          pr_labels: template-sync
+          pr_title: 'chore: обновление инфраструктуры из шаблона'
+          is_dry_run: ${{ inputs.dry_run }}

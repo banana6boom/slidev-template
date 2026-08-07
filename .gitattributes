@@ -1,0 +1,27 @@
+# Единые переводы строк во всём репозитории.
+# Участники работают на разных ОС; без этого Windows-клиенты закоммитят CRLF,
+# и diff markdown-слайдов превратится в сплошное изменение всех строк.
+* text=auto eol=lf
+
+# Бинарные файлы не трогать
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
+*.webm binary
+*.mp3 binary
+*.wav binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.zip binary
+*.gz binary
+
+# Лок-файл не показывать в diff по умолчанию
+pnpm-lock.yaml -diff linguist-generated

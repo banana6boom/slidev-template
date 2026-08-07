@@ -1,0 +1,148 @@
+{
+  "version": "2.0.0",
+  // Задачи — тонкие обёртки над npm-скриптами: никакой логики здесь нет.
+  // Запуск: Ctrl+Shift+P → «Tasks: Run Task» (или Terminal → Run Task).
+  //
+  // Тип shell, а не npm: тип npm не поддерживает передачу аргументов,
+  // а имя презентации нужно передавать почти во все команды.
+  "tasks": [
+    {
+      "label": "Презентация: запустить",
+      "detail": "Dev-сервер с hot-reload: порт 3030 или следующий свободный",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["slides", "${input:slidesName}"],
+      // Dev-сервер работает бесконечно — иначе VS Code ждёт его завершения
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Презентации: показать список",
+      "detail": "Какие презентации есть в репозитории",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["slides:list"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Презентация: создать новую",
+      "detail": "Каркас новой презентации с подключёнными общими блоками",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["slides:new", "${input:newSlidesName}"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Презентация: собрать",
+      "detail": "Статическая сборка одной презентации",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["build", "${input:slidesName}"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Презентации: собрать все",
+      "detail": "Все презентации в dist/<имя>/",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["build:all"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Презентация: экспорт в PDF",
+      "detail": "Требует браузер: npx playwright install chromium",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["export", "${input:slidesName}"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Проверки: всё",
+      "detail": "Слайды, генератор, код, типы, орфография, форматирование, сборка",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["check"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Проверки: только слайды",
+      "detail": "Быстрая проверка разметки презентаций",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["lint:content"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Исправить: код и форматирование",
+      "detail": "eslint --fix по коду и prettier по слайдам",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "fix"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      // pickString требует статического списка опций — он разошёлся бы
+      // с реальными папками при добавлении презентации. Поэтому ввод строкой,
+      // а посмотреть варианты можно задачей «Презентации: показать список».
+      "id": "slidesName",
+      "type": "promptString",
+      "description": "Имя презентации (например 01-demo)",
+      "default": "01-demo"
+    },
+    {
+      "id": "newSlidesName",
+      "type": "promptString",
+      "description": "Имя новой презентации в формате NN-название (например 02-basics)"
+    }
+  ]
+}

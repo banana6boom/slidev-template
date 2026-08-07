@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    // Превью слайдов, дерево лекций, drag-n-drop и Language Model Tools для Copilot
+    "antfu.slidev",
+    // Подсветка и языковой сервер Vue — общие блоки в shared/ написаны на Vue
+    "vue.volar",
+    // Единые отступы и переводы строк на разных ОС
+    "editorconfig.editorconfig",
+    // Показывает замечания линтера прямо в редакторе
+    "dbaeumer.vscode-eslint",
+    // Орфография в слайдах: русский словарь подключён в cspell.config.yaml
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-russian"
+  ]
+}

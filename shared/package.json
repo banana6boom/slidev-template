@@ -1,0 +1,12 @@
+{
+  "name": "slidev-addon-deck-shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Переиспользуемые лейауты, компоненты и стили для всех презентаций",
+  "keywords": [
+    "slidev-addon"
+  ],
+  "engines": {
+    "slidev": ">=52.0.0"
+  }
+}

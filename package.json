@@ -1,0 +1,60 @@
+{
+  "name": "slidev-presentations",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.7.0",
+  "description": "Презентации на Slidev: общие лейауты и компоненты, генератор, проверки качества",
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
+  "scripts": {
+    "preinstall": "node scripts/ensure-pnpm.mjs",
+    "slides": "node scripts/slides.mjs dev",
+    "slides:new": "node scripts/new-slides.mjs",
+    "slides:list": "node scripts/slides.mjs list",
+    "mcp": "node scripts/mcp-slides.mjs",
+    "build": "node scripts/slides.mjs build",
+    "build:all": "node scripts/build-all.mjs",
+    "export": "node scripts/slides.mjs export",
+    "clean": "node scripts/clean.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fix": "pnpm lint:fix && pnpm format",
+    "lint:content": "node scripts/lint-content.mjs",
+    "test:generator": "node scripts/test-generator.mjs",
+    "lint:spell": "cspell --no-progress \"presentations/**/*.md\" \"*.md\"",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "format": "pnpm lint:content && prettier --write \"presentations/**/*.md\"",
+    "format:check": "prettier --check \"presentations/**/*.md\"",
+    "check": "pnpm lint:content && pnpm test:generator && pnpm lint && pnpm typecheck && pnpm lint:spell && pnpm format:check && pnpm build:all",
+    "postinstall": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^9.2.0",
+    "@cspell/dict-ru_ru": "^2.3.2",
+    "@slidev/cli": "^52.18.0",
+    "@slidev/theme-default": "^0.25.0",
+    "cspell": "^10.0.1",
+    "eslint": "^10.8.0",
+    "lint-staged": "^17.2.0",
+    "playwright-chromium": "^1.62.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-slidev": "^1.0.5",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^6.0.3",
+    "vue": "^3.5.13",
+    "vue-tsc": "^3.3.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint:content && pnpm exec lint-staged && pnpm typecheck && node scripts/build-staged.mjs",
+    "pre-push": "pnpm build:all"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts,vue,json,yaml,yml}": "eslint --fix",
+    "presentations/**/*.md": [
+      "prettier --write",
+      "cspell --no-progress"
+    ]
+  }
+}

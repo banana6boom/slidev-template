@@ -1,0 +1,13 @@
+{
+  "$comment": "ВАЖНО: путь к лекции задан явно — slidev mcp требует конкретный файл и не умеет определять его сам. Работая над другой лекцией, переключите его командой «pnpm mcp <имя лекции>» и перезапустите Claude Code, иначе MCP-инструменты будут править файлы лекции, указанной в args ниже.",
+  "mcpServers": {
+    "slidev": {
+      "command": "node",
+      "args": [
+        "node_modules/@slidev/cli/bin/slidev.mjs",
+        "mcp",
+        "lectures/01-intro/slides.md"
+      ]
+    }
+  }
+}

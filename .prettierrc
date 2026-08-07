@@ -1,0 +1,14 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ["lectures/**/*.md"],
+      "options": {
+        "parser": "slidev",
+        "plugins": ["prettier-plugin-slidev"]
+      }
+    }
+  ]
+}

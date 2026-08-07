@@ -1,0 +1,50 @@
+node_modules/
+.pnpm-store/
+.DS_Store
+Thumbs.db
+
+# Сборка Slidev
+dist/
+presentations/*/dist/
+.slidev/
+
+# Экспортированные материалы (PDF/PPTX/PNG собираются из исходников)
+export/
+*.pdf
+*.pptx
+
+# Lock-файлы чужих менеджеров: проект использует pnpm (guard в preinstall)
+package-lock.json
+yarn.lock
+
+# Локальные окружения и логи
+.env
+.env.local
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Кэш инструментов
+.vite/
+.cache/
+.temp/
+.turbo/
+
+# Личная devcontainer-конфигурация автора (общая — .devcontainer/devcontainer.json)
+.devcontainer/author/
+
+# Локальные настройки Claude Code (общие лежат в .claude/settings.json)
+.claude/settings.local.json
+.mcp.local.json
+CLAUDE.local.md
+
+# Настройки IDE. VS Code — исключение: .vscode/ с задачами лежит в репозитории
+# намеренно, это один из трёх поддерживаемых способов запуска
+.idea/
+*.iml
+
+# Планы работ — рабочие черновики, не часть материалов курса
+docs/plans/
+
+# Служебное
+.remember/

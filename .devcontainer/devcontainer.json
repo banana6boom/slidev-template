@@ -1,0 +1,31 @@
+{
+  "name": "Курс Angular — материалы",
+  // Digest соответствует тегу 4-24-bookworm (Node 24.18.0, pnpm 11.7.0) —
+  // тег плавающий, digest — нет. Обновлять осознанно, между потоками курса.
+  "image": "mcr.microsoft.com/devcontainers/typescript-node@sha256:cfb41999420f9f05aae60a3a02d016867936d6fdd49dfff7de3940a2dac2242a",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": { "zsh": { "path": "/bin/zsh" } }
+      },
+      "extensions": [
+        "antfu.slidev",
+        "vue.volar",
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-russian"
+      ]
+    }
+  },
+  "forwardPorts": [3030, 3031, 3032, 3033, 3034],
+  "portsAttributes": {
+    // Диапазон: при занятом 3030 Slidev берёт следующий свободный порт
+    "3030-3039": {
+      "label": "Slidev",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}

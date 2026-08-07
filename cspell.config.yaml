@@ -1,0 +1,59 @@
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: '0.2'
+
+# Опечатку в слайде видит вся группа на проекторе, поэтому проверяем
+# материалы курса. Код и конфиги не проверяем — там идентификаторы, а не текст.
+
+# Русский словарь подключается пакетом: без import его определения
+# не попадают в область видимости конфига.
+import:
+  - '@cspell/dict-ru_ru/cspell-ext.json'
+
+language: ru,en-US
+
+dictionaries:
+  - ru-ru
+  - en_US
+  - softwareTerms
+  - typescript
+  - node
+  - html
+  - css
+  - infra
+  - project
+
+# Словарь разделён надвое: infra обновляется вместе с инфраструктурой,
+# project принадлежит конкретному репозиторию и при обновлении не трогается
+dictionaryDefinitions:
+  - name: infra
+    path: ./.cspell/infra.txt
+    addWords: false
+  - name: project
+    path: ./.cspell/project.txt
+    addWords: true
+
+files:
+  - presentations/**/*.md
+  - '*.md'
+
+ignorePaths:
+  - node_modules/**
+  - dist/**
+  - .claude/skills/**
+  - pnpm-lock.yaml
+
+ignoreRegExpList:
+  # Блоки кода: идентификаторы API — не орфография
+  - /```[\s\S]*?```/
+  - /`[^`\n]+`/
+  # Vue/HTML-теги: вырезаем имя тега, имена атрибутов и технические значения
+  # (пути, классы), но строковые значения пропсов проверяются — в них живёт
+  # русский текст слайдов (<Note title="…">, :items="[…]")
+  - /<\/?[A-Za-z][\w.-]*/
+  - /[\w:@#.-]+=(?=["'{[])/
+  - /\b(?:src|href|class|style)=["'][^"']*["']/
+  # Ссылки и пути
+  - /https?:\/\/\S+/
+  - /\.\.?\/[\w./-]+/
+  # Frontmatter-ключи вида «layout:», «lineNumbers:»
+  - /^\s*[\w.$-]+:/gm

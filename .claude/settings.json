@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "extraKnownMarketplaces": {
+    "slidev-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "slidevjs/slidev"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "slidev@slidev-plugins": true
+  },
+  "enableAllProjectMcpServers": true
+}

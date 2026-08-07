@@ -1,0 +1,56 @@
+/*
+ * Общие стили. Подключаются автоматически во всех презентациях,
+ * так как shared/ — это Slidev-аддон, а его styles/index.css входит в roots.
+ *
+ * Правило: все селекторы держим внутри .slidev-layout, иначе стили протекают
+ * в интерфейс режима презентатора (рекомендация документации Slidev).
+ *
+ * Селекторы намеренно плоские, без вложенности: этот файл грузится как
+ * обычный CSS, и полагаться на препроцессинг вложенности здесь не стоит.
+ */
+
+:root {
+  /* Фирменный акцент Angular — используется лейаутами и компонентами */
+  --deck-accent: #dd0031;
+  --deck-accent-soft: #f8bbd0;
+}
+
+/* Заголовки чуть плотнее дефолтных: на слайде важна вертикальная экономия */
+.slidev-layout h1 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.slidev-layout h2 {
+  font-weight: 600;
+}
+
+/* Списки — с большим межстрочным ритмом для читаемости из зала */
+.slidev-layout ul,
+.slidev-layout ol {
+  line-height: 1.65;
+}
+
+/* Инлайн-код заметнее на фоне текста (pre > code не трогаем — там подсветка) */
+.slidev-layout :not(pre) > code {
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  background: rgb(128 128 128 / 14%);
+  font-size: 0.9em;
+}
+
+/* Длинные листинги скроллятся, а не ломают вёрстку слайда */
+.slidev-layout pre {
+  max-height: 22rem;
+  overflow: auto;
+}
+
+/* Таблицы читаемы с дальних рядов */
+.slidev-layout table {
+  font-size: 0.9em;
+}
+
+.slidev-layout th {
+  font-weight: 600;
+  text-align: left;
+}

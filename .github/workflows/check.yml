@@ -1,0 +1,36 @@
+# Проверки качества: то же, что `pnpm check` локально.
+#
+# В репозитории курса этот workflow не обязателен — гейты и так стоят
+# на pre-commit и pre-push. Он нужен прежде всего самому шаблону: изменения
+# инфраструктуры уезжают в чужие репозитории, поэтому шаблон должен
+# подтверждать свою работоспособность на чистой машине.
+#
+# Если ведёте курс в одиночку и вам достаточно локальных хуков — файл
+# можно удалить, на работу репозитория это не влияет.
+
+name: Проверки
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Версия pnpm берётся из поля packageManager в package.json
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      # Chromium не ставим: он нужен только для `pnpm export` (PDF),
+      # а это ~650 МБ на каждый прогон
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm check
